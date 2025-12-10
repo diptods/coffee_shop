@@ -1,6 +1,6 @@
 # Coffee Zone - Modern Coffee Shop Web Application
 
-![Coffee Zone Banner](https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQwjNugrvSLuSqO7jg7rDfuwIIrzhUphZYhdJvvRMgtY0KRF29H)
+![Coffee Zone Banner](image/banner.jpg)
 
 ## 📋 Project Overview
 

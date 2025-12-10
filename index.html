@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Coffee Zone</title>
+    <!--fabicon start-->
+    <link rel="icon" type="image/x-icon" href="https://e7.pngegg.com/pngimages/315/563/png-clipart-logo-cappuccino-cafe-coffee-ristretto-coffee-cafe-logo.png">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- AOS for scroll animations -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <!-- Custom -->
+    <link href="/styles.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light glass">
+        <div class="container-fluid px-2 px-sm-3">
+            <a class="navbar-brand d-flex align-items-center gap-1 gap-sm-2" href="/index.html">
+                <div class="brand-logo"><img
+                        src="https://e7.pngegg.com/pngimages/315/563/png-clipart-logo-cappuccino-cafe-coffee-ristretto-coffee-cafe-logo.png"
+                        alt="Coffee Zone" style="height: 3.5vh; width: auto; max-width: 45px;"></div>
+                <div>
+                    <div class="fw-bold" style="font-size: clamp(0.9rem, 2vw, 1.2rem);">Coffee Zone</div>
+                </div>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-1 gap-lg-0">
+                    <li class="nav-item"><a class="nav-link py-2" href="/index.html#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link py-2" href="/index.html#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link py-2" href="/index.html#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link py-2" href="/index.html#menu">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link py-2" href="/index.html#contact">Contact</a></li>
+                    <li class="nav-item ms-lg-2 p-1"><a class="btn btn-warning btn-sm w-100" href="/index.html#order">Order</a></li>
+                    <li class="nav-item ms-lg-2 p-1"><button class="btn btn-outline-secondary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#authModal" id="auth-btn">Login</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--header hero-->
+    <!-- Header with full-height image -->
+    <div class="hero-header position-relative" style="background: url('image/banner.jpg') center/cover no-repeat; min-height: 500px; display: flex; align-items: center;">
+        <!-- HERO -->
+        <header id="home" class="hero w-100 d-flex align-items-center" style="position: relative; z-index: 1;">
+        <div class="container-fluid px-3 px-sm-4 texta text-white">
+            <div class="row align-items-center justify-content-center">
+                <div class="hero-text col-12 col-lg-6 text-center text-lg-start" data-aos="fade-right">
+                    <h1 class="display-6 display-md-5 fw-bold mb-3">Handcrafted Coffee Fresh Pastry</h1>
+                    <p class="lead fs-6 fs-md-5 mb-4">Warm vibes, bold flavor — your neighborhood destination for artisan coffee and sweet moments.</p>
+                    <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center justify-content-lg-start">
+                        <a class="btn btn-light border-1 w-100 w-sm-auto" href="/index.html#menu">See Menu</a>
+                        <a class="btn btn-warning border-0 w-100 w-sm-auto" href="/index.html#order">Order Online</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center d-none d-lg-block" data-aos="zoom-in">
+                   
+                </div>
+            </div>
+        </div>
+    </header>
+    </div>
+   
+    
+
+    <!-- ABOUT -->
+    <section id="about" class="py-5 px-3 px-md-4">
+        <div class="container-fluid">
+            <div class="row g-4 g-md-5 align-items-center">
+                <div class="col-12 col-md-6" data-aos="fade-up">
+                    <h2 class="text-center text-md-start text-info-emphasis mb-3">About Coffee Zone</h2>
+                    <p class="text-muted mb-3">We carefully source beans and roast with patience. From single-origin filter to velvety lattes, each cup is crafted for flavor and comfort.</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="bi bi-check2-circle text-warning me-2"></i>Small-batch roasts</li>
+                        <li class="mb-2"><i class="bi bi-check2-circle text-warning me-2"></i>Fresh pastries daily</li>
+                        <li class="mb-2"><i class="bi bi-check2-circle text-warning me-2"></i>Community friendly space</li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-6" data-aos="fade-left">
+                    <div class="p-4 glass rounded">
+                        <h5 class="mb-3">Our Promise</h5>
+                        <p class="small text-muted mb-3">Quality, consistency, and an inviting atmosphere — always.</p>
+                        <div class="row g-2 g-md-3 mt-2">
+                            <div class="col-6 col-md-6">
+                                <h4 class="mb-1">4.9</h4>
+                                <small class="text-muted d-block">Average rating</small>
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <h4 class="mb-1">1,200+</h4>
+                                <small class="text-muted d-block">Happy customers</small>
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <h4 class="mb-1">40+</h4>
+                                <small class="text-muted d-block">Unique Coffee</small>
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <h4 class="mb-1">24/7</h4>
+                                <small class="text-muted d-block">Free Delivery</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="bg-light py-5 px-3 px-md-4">
+        <div class="container-fluid">
+            <h3 class="text-center mb-5" data-aos="fade-up">Services</h3>
+            <div class="row g-3 g-md-4">
+                <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="50">
+                    <div class="card border-0 shadow-sm service-card h-100">
+                        <div class="card-body">
+                            <div class="icon-circle mb-3" style="font-size: 2.5rem;">☕</div>
+                            <h5>In-store Coffee</h5>
+                            <p class="text-muted small">Expertly pulled espresso, specialty pour-overs and cozy seating.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card h-100 border-0 shadow-sm service-card">
+                        <div class="card-body">
+                            <div class="icon-circle mb-3" style="font-size: 2.5rem;">🥐</div>
+                            <h5>Fresh Pastries</h5>
+                            <p class="text-muted small">Baked daily with seasonal flavors—croissants, muffins & more.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="150">
+                    <div class="card h-100 border-0 shadow-sm service-card">
+                        <div class="card-body">
+                            <div class="icon-circle mb-3" style="font-size: 2.5rem;">🚚</div>
+                            <h5>Catering & Delivery</h5>
+                            <p class="text-muted small">Order in advance for office deliveries and events.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu" class="py-5 px-3 px-md-4">
+        <div class="container-fluid">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-4">
+                <h3 class="mb-0" data-aos="fade-up">Menu</h3>
+                <div class="d-flex flex-wrap gap-2">
+                    <button class="btn btn-outline-secondary btn-sm" id="filter-all">All</button>
+                    <button class="btn btn-outline-secondary btn-sm" id="filter-coffee">Coffee</button>
+                    <button class="btn btn-outline-secondary btn-sm" id="filter-tea">Tea</button>
+                    <button class="btn btn-outline-secondary btn-sm" id="filter-pastry">Snacks</button>
+                </div>
+            </div>
+
+            <div class="row g-2 g-md-4" id="menu-list" data-aos="fade-in">
+                <!-- JS injects menu cards here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ORDER (Cart & Form) -->
+    <section id="order" class="py-5 bg-light px-3 px-md-4">
+        <div class="container-fluid">
+            <h3 class="text-center mb-4" data-aos="fade-up">Order Online</h3>
+            <div class="row g-3 g-md-4">
+                <div class="col-12 col-lg-7" data-aos="fade-up">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Your Cart</h5>
+                            <div id="cart-items" class="mb-3">
+                                <p class="text-muted">Your cart is empty. Add items from the menu.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div><strong>Total: $<span id="cart-total">0.00</span></strong></div>
+                                <button id="checkout-btn" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#checkoutModal" disabled>Checkout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-5" data-aos="fade-up">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Quick Contact</h5>
+                            <form id="quick-contact-form" autocomplete="off">
+                                <div class="mb-2">
+                                    <input class="form-control" id="qc-name" placeholder="Your name" required>
+                                </div>
+                                <div class="mb-2">
+                                    <input class="form-control" id="qc-mail" placeholder="email" required>
+                                </div>
+                                <div class="mb-2">
+                                    <textarea class="form-control" id="qc-note"
+                                        placeholder="Any note (optional)"></textarea>
+                                </div>
+                                <button class="btn btn-outline-primary w-100" id="save-quick-contact">Save contact</button>
+                            </form>
+                            <small class="text-muted d-block mt-3">We'll confirm your order via phone/email.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-5 px-3 px-md-4">
+        <div class="container-fluid visit">
+            <h3 class="mb-4" data-aos="fade-up">Contact & Visit</h3>
+            <div class="row g-3 g-md-4">
+                <div class="col-12 col-md-6" data-aos="fade-right">
+                    <div class="card shadow-sm p-4">
+                        <h5 class="mb-3">Opening Hours</h5>
+                        <p class="mb-2"><strong>Mon-Fri:</strong> 10:00 AM - 8:00 PM</p>
+                        <p class="mb-3"><strong>Sat-Sun:</strong> 11:00 AM - 9:00 PM</p>
+                        <h5 class="mt-4 mb-3">Address</h5>
+                        <p class="text-muted mb-3">123 Bean Street, Coffee Town</p>
+                        <h5 class="mt-4 mb-3">Phone</h5>
+                        <p class="text-muted">+123456789</p>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-md-6" data-aos="fade-left">
+                    <div class="card shadow-sm p-4">
+                        <h5 class="mb-3">Message Us</h5>
+                        <form id="contact-form">
+                            <div class="mb-2">
+                                <input class="form-control" id="contact-firstName" placeholder="First Name" required>
+                            </div>
+                            <div class="mb-2">
+                                <input class="form-control" id="contact-lastName" placeholder="Last Name" required>
+                            </div>
+                            <div class="mb-2">
+                                <input class="form-control" id="contact-email" placeholder="Email" required>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" id="contact-message" placeholder="Message" required></textarea>
+                            </div>
+                            <button class="btn btn-warning w-100">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-4 bg-dark text-white">
+        <div class="container-fluid">
+            <div class="row g-3 px-3 px-md-4">
+                <div class="col-12 col-md-6 text-center text-md-start">
+                    <div class="fw-bold">Coffee Zone</div>
+                    <small class="text-white-50">Handcrafted coffee · Fresh pastry · Snacks</small>
+                </div>
+                <div class="col-12 col-md-6 text-center text-md-end">
+                    <small class="text-white-50">© <span id="year"></span> Coffee Zone. All rights reserved.</small><br>
+                    <small class="text-white-100">Design and developed by <a href="https://github.com/diptods">Dipto Das</a></small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CHECKOUT MODAL -->
+    <div class="modal fade" id="checkoutModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Checkout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="checkout-form">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Name</label>
+                                <input class="form-control" id="order-name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Contact (phone/email)</label>
+                                <input class="form-control" id="order-contact" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Pickup / Delivery Notes</label>
+                                <textarea class="form-control" id="order-note"></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <div><strong>Total: $<span id="modal-total">0.00</span></strong></div>
+                                    <button class="btn btn-success" type="submit">Place Order</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 small text-muted">This demo uses localStorage to save orders. Integrate a real
+                            backend for production.</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!--<button onclick="topFunction()" id="myBtn" title="Go to top" >Top</button>-->
+    <!--Back to top button-->
+
+    <!-- AUTH MODAL (Login/Signup) -->
+    <div class="modal fade" id="authModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="auth-title">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Login Tab -->
+                    <div id="login-tab" class="auth-tab">
+                        <form id="login-form">
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" id="login-email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" id="login-password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" id="login-admin"> Login as Admin
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
+                        </form>
+                        <hr>
+                        <p class="text-center text-muted">Don't have an account? <a href="#" onclick="switchToSignup()" class="link-primary">Sign up</a></p>
+                    </div>
+
+                    <!-- Signup Tab -->
+                    <div id="signup-tab" class="auth-tab" style="display:none;">
+                        <form id="signup-form">
+                            <div class="mb-3">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="signup-name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" id="signup-email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" id="signup-password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="signup-confirm-password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" id="signup-admin"> Register as Admin
+                                </label>
+                                <small class="text-muted d-block mt-2">Check this only if you have admin credentials</small>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">Sign Up</button>
+                        </form>
+                        <hr>
+                        <p class="text-center text-muted">Already have an account? <a href="#" onclick="switchToLogin()" class="link-primary">Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFILE MODAL -->
+    <div class="modal fade" id="profileModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">My Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong id="profile-name"></strong></p>
+                    <p class="text-muted" id="profile-email"></p>
+                    <p class="text-muted" id="profile-role"></p>
+                    <button class="btn btn-warning w-100 mt-3" id="view-admin-btn" style="display:none;">Go to Admin Panel</button>
+                    <button class="btn btn-outline-primary w-100 mt-2" id="view-cart-btn" style="display:none;">View My Cart</button>
+                    <button class="btn btn-danger w-100 mt-2" id="logout-btn">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="/script.js"></script>
+    <script src="/auth.js"></script>
+    <script>
+        AOS.init({ once: true, duration: 700 });
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+    <script>
+  
+/*----Quick contact--*/
+// Quick Contact form submission
+document.getElementById('quick-contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('qc-name').value.trim();
+    const email = document.getElementById('qc-mail').value.trim();
+    const message = document.getElementById('qc-note').value.trim();
+
+    if(!name || !email) { 
+        alert('Please fill in name and email'); 
+        return; 
+    }
+
+    // Gather all the data from the inputs
+    const formData = {
+        name: name,
+        email: email,
+        message: message,
+        timestamp: new Date().toLocaleString()
+    };
+
+    // Get existing submissions or create a new array
+    const existingData = JSON.parse(localStorage.getItem('contactSubmissions')) || [];
+    existingData.push(formData); // Add the new submission
+
+    // Save the updated list back to localStorage
+    localStorage.setItem('contactSubmissions', JSON.stringify(existingData));
+
+    alert('Message saved locally! Go to admin.html to view it.');
+    this.reset(); // Clear the form
+});
+
+/*---Message Us Section--*/
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const firstName = document.getElementById('contact-firstName').value.trim();
+    const lastName = document.getElementById('contact-lastName').value.trim();
+    const email = document.getElementById('contact-email').value.trim();
+    const message = document.getElementById('contact-message').value.trim();
+
+    if(!firstName || !lastName || !email || !message) {
+        alert('Please fill in all fields');
+        return;
+    }
+
+    // Gather all the data from the inputs
+    const formData = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        message: message,
+        timestamp: new Date().toLocaleString()
+    };
+
+    // Get existing submissions or create a new array
+    const existingData = JSON.parse(localStorage.getItem('contactSubmissions')) || [];
+    existingData.push(formData); // Add the new submission to the list
+
+    // Save the updated list back to localStorage
+    localStorage.setItem('contactSubmissions', JSON.stringify(existingData));
+
+    alert('Message saved locally!');
+    this.reset(); // Clear the form for the next entry
+});
+    </script>
+</body>
+
+</html>

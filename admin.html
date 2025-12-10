@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin — Coffee Script</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+<!-- Auth Check Script -->
+<script>
+  // Check if user is logged in and is admin
+  const currentUser = JSON.parse(localStorage.getItem('cs_current_user_v1') || 'null');
+  
+  if (!currentUser || currentUser.role !== 'admin') {
+    alert('Access denied. Admin login required.');
+    window.location.href = 'index.html';
+  }
+  
+  // Update navbar with admin name
+  if (currentUser && currentUser.name) {
+    document.addEventListener('DOMContentLoaded', function() {
+      const brandElement = document.querySelector('.navbar-brand');
+      if (brandElement) {
+        brandElement.textContent = `Coffee Zone — Admin (${currentUser.name})`;
+      }
+    });
+  }
+</script>
+
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">Coffee Zone — Admin</a>
+    <div>
+      <a class="btn btn-sm btn-outline-light me-2" href="index.html">View Site</a>
+      <button class="btn btn-sm btn-warning" id="logout">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<main class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Dashboard</h2>
+    <div>
+      <span class="me-3">Orders: <strong id="orders-count">0</strong></span>
+      <span>Total Revenue: $<strong id="total-revenue">0.00</strong></span>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Orders</h5>
+          <button class="btn btn-sm btn-outline-secondary" id="refresh-orders">Refresh</button>
+        </div>
+        <div class="card-body" id="orders-list" style="min-height:200px"> <hr>
+          <!-- orders injected here -->
+        </div>
+      </div>
+    </div>
+
+    <div class=" col-lg-6 " style="max-height: 40vh; min-width: 400px; max-width: 46%; overflow: scroll;">
+      <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Menu Management</h5>
+          <button class="btn btn-sm btn-primary" id="add-item-btn">Add Item</button>
+        </div>
+        <div class="card-body">
+          <div id="menu-admin-list">
+            <!-- menu items injected here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Users Section -->
+  <div class="row g-4 mt-4">
+    <div class="col-lg-12">
+      <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">
+            <i class="bi bi-people-fill"></i> Registered Users
+          </h5>
+          <span class="badge bg-primary" id="users-count">0</span>
+        </div>
+        <div class="card-body">
+          <div id="users-list-container">
+            <p class="text-muted text-center">Loading users...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- User Details Modal -->
+<div class="modal fade" id="userDetailsModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title" id="userDetailsTitle">User Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="userDetailsContent">
+          <p class="text-muted">Loading user information...</p>
+        </div>
+      </div>
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Item Modal -->
+<div class="modal fade" id="itemModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <form id="item-form">
+        <div class="modal-header">
+          <h5 class="modal-title" id="item-modal-title">Add Item</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="item-id">
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input id="item-name" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Category</label>
+            <select id="item-category" class="form-select">
+              <option value="coffee">Coffee</option>
+              <option value="pastry">Pastry</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Price (USD)</label>
+            <input type="number" step="0.01" id="item-price" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Image URL (optional)</label>
+            <input id="item-img" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea id="item-desc" class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" type="submit">Save Item</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!---user data-->
+<div class="container mt-5">
+  <div class="row g-4">
+    <!-- Quick Contact Submissions -->
+    <div class="col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Quick Contacts :</h5>
+          <button class="btn btn-sm btn-danger" onclick="clearContactSubmissions()">Clear</button>
+        </div>
+        <div class="card-body" id="submissions-display-area1" style="min-height:200px">
+          <p class="text-muted">Loading submissions...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message Us Submissions -->
+    <div class="col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">User Messages :</h5>
+          <button class="btn btn-sm btn-danger" onclick="clearMessageSubmissions()">Clear</button>
+        </div>
+        <div class="card-body" id="submissions-display-area2" style="min-height:200px">
+          <p class="text-muted">No submissions loaded yet...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+
+<!-- Registered Users Management Script -->
+<script>
+// Function to render all registered users
+function renderRegisteredUsers() {
+    const container = document.getElementById('users-list-container');
+    const usersJSON = localStorage.getItem('cs_users_v1');
+    
+    if (!usersJSON) {
+        container.innerHTML = '<p class="text-muted text-center">No registered users yet.</p>';
+        document.getElementById('users-count').textContent = '0';
+        return;
+    }
+    
+    try {
+        const users = JSON.parse(usersJSON);
+        
+        if (!Array.isArray(users) || users.length === 0) {
+            container.innerHTML = '<p class="text-muted text-center">No registered users yet.</p>';
+            document.getElementById('users-count').textContent = '0';
+            return;
+        }
+        
+        // Update user count badge
+        document.getElementById('users-count').textContent = users.length;
+        
+        // Create user cards with responsive layout
+        let html = '<div class="row g-2 g-sm-3 g-md-4">';
+        
+        users.forEach((user, index) => {
+            const roleClass = user.role === 'admin' ? 'bg-danger' : 'bg-primary';
+            const roleBadge = user.role === 'admin' ? 
+                '<span class="badge bg-danger ms-2">Admin</span>' : 
+                '<span class="badge bg-success ms-2">Customer</span>';
+            
+            const createdDate = new Date(user.createdAt).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            // Responsive columns: 1 col on mobile, 2 on tablet, 3 on desktop, 4 on large screens
+            html += `
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                    <div class="card user-card h-100 border-0 shadow-sm hover-shadow" 
+                         onclick="showUserDetails(${index})" 
+                         style="cursor: pointer; transition: all 0.3s ease;">
+                        <div class="card-body p-3 p-sm-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3 gap-2">
+                                <div class="flex-grow-1 min-w-0">
+                                    <h6 class="card-title mb-2 text-truncate" title="${user.name}">
+                                        <i class="bi bi-person-circle"></i> ${user.name}
+                                    </h6>
+                                    <div>${roleBadge}</div>
+                                </div>
+                            </div>
+                            <hr class="my-3">
+                            <div class="user-email text-muted small mb-2 text-truncate" title="${user.email}">
+                                <i class="bi bi-envelope"></i> ${user.email}
+                            </div>
+                            <div class="user-joined text-muted small">
+                                <i class="bi bi-calendar"></i> <span class="d-none d-sm-inline">Joined:</span> ${createdDate}
+                            </div>
+                            <div class="mt-3 pt-3 border-top">
+                                <small class="text-muted d-block text-center">👆 View details</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+        container.innerHTML = html;
+        
+        // Add hover effect via CSS
+        addUserCardHoverEffect();
+        
+    } catch (e) {
+        console.error('Error loading users:', e);
+        container.innerHTML = '<p class="text-danger text-center">Error loading users.</p>';
+    }
+}
+
+// Function to show user details in modal
+function showUserDetails(userIndex) {
+    const usersJSON = localStorage.getItem('cs_users_v1');
+    
+    if (!usersJSON) return;
+    
+    try {
+        const users = JSON.parse(usersJSON);
+        const user = users[userIndex];
+        
+        if (!user) return;
+        
+        // Format the user information
+        const createdDate = new Date(user.createdAt).toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+        
+        const roleHTML = user.role === 'admin' ? 
+            '<span class="badge bg-danger">Administrator</span>' : 
+            '<span class="badge bg-success">Customer</span>';
+        
+        const detailsHTML = `
+            <div class="user-details-container">
+                <div class="text-center mb-4">
+                    <div style="width: 80px; height: 80px; margin: 0 auto; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px; font-weight: bold; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+                        ${user.name.charAt(0).toUpperCase()}
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label text-muted small mb-1">Full Name</label>
+                    <div class="p-3 bg-light rounded d-flex align-items-center gap-2" style="word-break: break-word;">
+                        <i class="bi bi-person text-primary"></i>
+                        <strong>${user.name}</strong>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label text-muted small mb-1">Email Address</label>
+                    <div class="p-3 bg-light rounded d-flex align-items-center gap-2" style="overflow-x: auto;">
+                        <i class="bi bi-envelope text-primary"></i>
+                        <code style="white-space: nowrap;">${user.email}</code>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label text-muted small mb-1">User Role</label>
+                    <div class="p-3 bg-light rounded d-flex align-items-center gap-2">
+                        <i class="bi bi-shield-check text-primary"></i>
+                        ${roleHTML}
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label text-muted small mb-1">Account Created</label>
+                    <div class="p-3 bg-light rounded d-flex align-items-center gap-2">
+                        <i class="bi bi-clock-history text-primary"></i>
+                        <small>${createdDate}</small>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mb-0 d-flex align-items-start gap-2" role="alert">
+                    <i class="bi bi-info-circle-fill" style="min-width: 20px; margin-top: 2px;"></i>
+                    <div>
+                        <small><strong>User ID:</strong> <code>${user.id}</code></small>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('userDetailsTitle').textContent = `${user.name} - User Details`;
+        document.getElementById('userDetailsContent').innerHTML = detailsHTML;
+        
+        // Show the modal
+        const modal = new bootstrap.Modal(document.getElementById('userDetailsModal'));
+        modal.show();
+        
+    } catch (e) {
+        console.error('Error showing user details:', e);
+        alert('Error loading user details');
+    }
+}
+
+// Add hover effect styling with responsive improvements
+function addUserCardHoverEffect() {
+    const style = document.createElement('style');
+    style.textContent = `
+        /* User Card Styles */
+        .user-card {
+            border-radius: 12px;
+            overflow: hidden;
+            min-height: 280px;
+        }
+        
+        /* Desktop hover effect */
+        @media (hover: hover) and (pointer: fine) {
+            .hover-shadow:hover {
+                box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15) !important;
+                transform: translateY(-4px);
+            }
+        }
+        
+        /* Mobile active state */
+        @media (max-width: 576px) {
+            .user-card {
+                min-height: auto;
+                border-radius: 10px;
+            }
+            
+            .user-card:active {
+                box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15) !important;
+                transform: scale(0.98);
+            }
+            
+            .card-body {
+                padding: 1rem !important;
+            }
+            
+            .user-email,
+            .user-joined {
+                font-size: 0.8rem !important;
+            }
+        }
+        
+        /* Tablet styles */
+        @media (min-width: 577px) and (max-width: 991px) {
+            .user-card {
+                min-height: 260px;
+            }
+        }
+        
+        /* Desktop styles */
+        @media (min-width: 992px) {
+            .user-card {
+                min-height: 280px;
+            }
+        }
+        
+        /* Text truncation for long names */
+        .text-truncate {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Ensure proper spacing on small screens */
+        @media (max-width: 576px) {
+            .row.g-2 {
+                gap: 0.5rem !important;
+            }
+            
+            .card-title {
+                font-size: 1rem !important;
+            }
+            
+            .badge {
+                font-size: 0.7rem !important;
+                padding: 0.35rem 0.55rem !important;
+            }
+        }
+        
+        /* Modal responsiveness */
+        @media (max-width: 576px) {
+            .modal-dialog {
+                margin: 1rem !important;
+            }
+            
+            .modal-content {
+                border-radius: 12px;
+            }
+            
+            .user-details-container {
+                padding: 0.5rem 0 !important;
+            }
+            
+            #userDetailsContent .p-3 {
+                padding: 0.75rem !important;
+            }
+        }
+        
+        /* Responsive avatar */
+        @media (max-width: 576px) {
+            .user-details-container > div:first-child > div {
+                width: 60px !important;
+                height: 60px !important;
+                font-size: 24px !important;
+            }
+        }
+        
+        /* Container padding adjustments */
+        @media (max-width: 576px) {
+            .container {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+        }
+    `;
+    
+    // Only add style once
+    if (!document.getElementById('user-card-styles')) {
+        style.id = 'user-card-styles';
+        document.head.appendChild(style);
+    }
+}
+
+// Initialize users on page load and when admin init runs
+document.addEventListener('DOMContentLoaded', function() {
+    renderRegisteredUsers();
+});
+</script>
+
+<script>
+  // admin page init
+  adminInit && adminInit();
+</script>
+
+<script>
+// Function to render Quick Contact submissions
+function renderQuickContactSubmissions() {
+    const displayArea = document.getElementById('submissions-display-area1');
+    const storedData = localStorage.getItem('contactSubmissions');
+
+    if (!storedData) {
+        displayArea.innerHTML = '<p class="text-muted">No quick contact submissions yet.</p>';
+        return;
+    }
+
+    try {
+        const submissions = JSON.parse(storedData);
+        // Filter only Quick Contact submissions (those without firstName property)
+        const quickContactOnly = submissions.filter(data => !data.firstName && data.name);
+        
+        if (quickContactOnly.length === 0) {
+            displayArea.innerHTML = '<p class="text-muted">No quick contact submissions yet.</p>';
+            return;
+        }
+
+        let tableHTML = `
+            <div style="overflow-x: auto;">
+            <table class="table table-striped table-hover table-sm mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        quickContactOnly.forEach((data, index) => {
+            tableHTML += `
+                <tr>
+                    <th scope="row">${index + 1}</th>
+                    <td>${data.name || 'N/A'}</td>
+                    <td>${data.email || 'N/A'}</td>
+                    <td><small>${(data.message).substring(0, 30)}</small></td>
+                    <td><small>${data.timestamp || 'N/A'}</small></td>
+                </tr>
+            `;
+        });
+
+        tableHTML += `
+                </tbody>
+            </table>
+            </div>
+        `;
+        displayArea.innerHTML = tableHTML;
+    } catch (e) {
+        displayArea.innerHTML = '<p class="text-danger">Error loading submissions.</p>';
+    }
+}
+
+// Function to render Message Us submissions
+function renderMessageSubmissions() {
+    const displayArea = document.getElementById('submissions-display-area2');
+    const storedData = localStorage.getItem('contactSubmissions');
+
+    if (!storedData) {
+        displayArea.innerHTML = '<p class="text-muted">No message submissions yet.</p>';
+        return;
+    }
+
+    try {
+        const submissions = JSON.parse(storedData);
+        // Filter only Message Us submissions (those with firstName property)
+        const messageOnly = submissions.filter(data => data.firstName);
+        
+        if (messageOnly.length === 0) {
+            displayArea.innerHTML = '<p class="text-muted">No message submissions yet.</p>';
+            return;
+        }
+
+        let tableHTML = `
+            <div style="overflow-x: auto;">
+            <table class="table table-striped table-hover table-sm mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        messageOnly.forEach((data, index) => {
+            tableHTML += `
+                <tr>
+                    <th scope="row">${index + 1}</th>
+                    <td>${data.firstName} ${data.lastName}</td>
+                    <td>${data.email || 'N/A'}</td>
+                    <td><small>${(data.message || 'N/A').substring(0, 30)}</small></td>
+                    <td><small>${data.timestamp || 'N/A'}</small></td>
+                </tr>
+            `;
+        });
+
+        tableHTML += `
+                </tbody>
+            </table>
+            </div>
+        `;
+        displayArea.innerHTML = tableHTML;
+    } catch (e) {
+        displayArea.innerHTML = '<p class="text-danger">Error loading submissions.</p>';
+    }
+}
+
+// Clear functions
+function clearContactSubmissions() {
+    if (confirm('Delete all quick contact submissions?')) {
+        const storedData = localStorage.getItem('contactSubmissions');
+        if (storedData) {
+            const submissions = JSON.parse(storedData);
+            const remaining = submissions.filter(data => data.firstName);
+            if (remaining.length === 0) {
+                localStorage.removeItem('contactSubmissions');
+            } else {
+                localStorage.setItem('contactSubmissions', JSON.stringify(remaining));
+            }
+        }
+        renderQuickContactSubmissions();
+        renderMessageSubmissions();
+    }
+}
+
+function clearMessageSubmissions() {
+    if (confirm('Delete all message submissions?')) {
+        const storedData = localStorage.getItem('contactSubmissions');
+        if (storedData) {
+            const submissions = JSON.parse(storedData);
+            const remaining = submissions.filter(data => !data.firstName);
+            if (remaining.length === 0) {
+                localStorage.removeItem('contactSubmissions');
+            } else {
+                localStorage.setItem('contactSubmissions', JSON.stringify(remaining));
+            }
+        }
+        renderQuickContactSubmissions();
+        renderMessageSubmissions();
+    }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    renderQuickContactSubmissions();
+    renderMessageSubmissions();
+});
+</script>
+</body>
+</html>
