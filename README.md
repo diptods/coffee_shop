@@ -6,6 +6,8 @@
 
 **Coffee Zone** is a modern, fully responsive web application for a coffee shop that combines an interactive menu system, user authentication, real-time cart management, and a comprehensive admin dashboard. Built with vanilla JavaScript, Bootstrap 5, and localStorage, it provides a complete solution for online ordering and customer engagement.
 
+[![Live Demo](https://img.shields.io/badge/Demo-Live%20Demo-Green?style=for-the-badge&logo=githubpages)](https://diptods.github.io/coffee_shop/)
+
 ### 🎯 Key Features
 
 - ☕ **Interactive Menu System** - Browse coffee, pastries, and snacks with category filtering
